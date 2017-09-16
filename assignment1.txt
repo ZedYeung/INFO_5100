@@ -1,0 +1,326 @@
+1. Hiking
+ 1.1. Rent a ReachNow to drive to mountain rainier on weekends with friends
+ 1.2. On the way, fill the gas
+ 1.3. On the way, eat at restaurant for lunch
+ 1.4. Buy the ticket to get into the park
+ 1.5. Book a hotel or check in the hotel.
+
+ Objects and Behaviors:
+
+Person
+	Data : name
+	Behavior: drive, pay, call, eat, to, hiking
+
+hiking
+  Data : date, companion, destination
+
+CreditCard
+  Data ： pin, expirationDate, ID, organization, balance
+
+RentCarCommpany
+  	Data: name, cars(collection),
+  	Behavior: rentCars
+
+Car
+	Data: name, rentPrice, speed, gas, brand
+	Behavior: stop, accelerate, fillGas
+
+GasStation
+    Data: address, gas
+    Behavior: provideGas
+
+Hotel
+  Data: name, rooms, emptyRoom, price
+  Behavior: provideAccomodation
+
+Ticket
+  Data: price
+
+restaurant
+  Data: name, address, emptySeat, cuisine(collection)
+  Behavior: provideDinner
+
+Park
+  Data: name, address
+
+Sequence of Flow - Invoke Objects with Behaviors
+
+Person Alex
+person Bob
+Person Candy
+CreditCard visa
+Car Camry
+CarRentCompany reachNow
+Ticket ticket
+Park park
+Trip trip
+Hotel hotel
+Restaurant restaurant
+
+1.1
+Alex.walk(reachNow.address)
+if readchNow(cars) > 0:
+  reachNow.rentCars(camry)
+  Alex.pay(visa)
+
+Alex.hiking(date, (Bob, Candy), mountain rainie)
+
+1.2
+Alex.drive(camry, gasStation)
+
+if gasStation(gas):
+  Alex.pay(visa)
+  car.fillGas()
+else:
+  Alex.drive(camry)
+
+1.3
+Alex.drive(camry, restaurant)
+if (restaurant.emptySeat >= 3):
+  Alex.eat()
+  Bob.eat()
+  Candy.eat()
+  Alex.pay(visa)
+  else:
+    Alex.drive(camry)
+
+1.4
+  Alex.drive(camry, park)
+  Alex.pay(visa) >- ticket
+  Alex.walk(intopark)
+  Bob.walk(intopark)
+  Candy.walk(intopark)
+
+1.5
+  Alex.walk(hotel)
+  Bob.walk(hotel)
+  Candy.walk(hotel)
+  if hotel.emptyRooms > 0:
+    Alex.pay(visa) >- Alex get accomodation
+
+2. Organise a career fair(Suppose you are the organiser)
+  2.1 Decide date and place
+  2.2 Contact company
+  2.3 Tell Student
+  2.4 Decorate place
+
+Person
+	Data : name, emailAddress, phoneNumber
+	Behavior: sendEmail, call, receiveEmail, receiveCall
+
+Student
+  Data : name, emailAddress, phoneNumber
+  Behavior: sendEmail, call, receiveEmail, receiveCall, register
+
+Company
+  Data: name, emailAddress, phoneNumber, numberAttend
+  Behavior: sendEmail, call, receiveEmail, receiveCall, dicideAttend
+
+CareerFair
+  Data: date, place
+
+Place
+  Data: area, address
+  Behavior: decorate
+
+Sequence of Flow - Invoke Objects with Behaviors
+
+Person me
+Student student(collection)
+Company company(collection)
+CareerFair careerFair
+Place place
+
+2.1
+careerFair = (date, place)
+
+2.2
+for company in company(collection):
+  me.sendEmail(company)
+  company.receiveEmail(me)
+  if comany.dicideAttend:
+    summarize the attend company data
+  else:
+    me.calll(company)
+    company.receiveCall(me)
+
+
+  me.call(company)
+  company.receiveCall(me)
+  if comany.dicideAttend:
+    summarize the attend company data
+  else:
+    end
+
+2.3
+for student in student(collection):
+  me.sendEmail(student)
+  if student.register():
+    summarize the attend student data
+  else:
+    me.sendEmail(student) after two days
+    until careerFair.date
+
+2.4
+According to summarize data
+place.decorate(desk, chair, food)
+
+3. Order Pizza from Pizza Hut
+3.1 customer login website
+3.2 customer order pizza
+3.3 customer pay the bill
+
+Customer
+  Data: id, username, password, creditcard, phonenumber
+  Behavior: order, login
+
+Website
+  Data: url
+  Behavior: get, post
+
+CreditCard
+  Data： pin, expirationDate, ID, organization, balance
+
+Pizza
+  Data: price, ingredients, amount
+
+Sequence of Flow - Invoke Objects with Behaviors
+
+Customer Alex
+Website pizzaHut
+CreditCard visa
+Pizza pizza
+
+3.1
+Alex.username, Alex.password >- Alex.login(pizzaHut)
+if Alex.username and Alex.password:
+  login success
+else:
+  login fail
+  please input the right username and password
+
+3.2
+Alex.order(pizza)
+if pizza.amount > 0:
+  order success
+else:
+  pizza sold out!
+
+3.3
+Alex.creditcard >- Alex.pay
+if visa.balance > pizza.price:
+  Alex pay success and Alex get the pizza
+else:
+  pay fail!
+
+4. Design a code sharing platform (eg: Github).
+4.1 user login
+4.2 user push
+4.3 user pull
+4.4 user fork
+
+User
+Data: username, password, id, homepage
+Behavior: login, push, pull, fork
+
+Website
+Data: url, userRepository
+Behavior: store
+
+Repository
+Data: file, id
+Behavior: add, remove, modify
+
+Sequence of Flow - Invoke Objects with Behaviors
+
+User Alex
+User otherUser
+Website buhtig
+Repository local
+Repository remote
+
+4.1 user login
+Alex.username, Alex.password >- Alex.login(buhtig)
+if Alex.username and Alex.password:
+  login success
+else:
+  login fail
+  please input the right username and password
+
+4.2 user push
+Alex.push(local) >- remote
+if remote.id == local.id:
+  if local.file not in remote.file:
+    remote.add(local.file)
+  elif local.file in remote.file:
+    remote.modify(remote.file) >- remote.file == local.file
+  else
+    remote.remove(remote.file)
+elif remote.id != local.id:
+  new Repository
+website.store(remote.file)
+
+4.3 user pull
+Alex.pull(remote) >- local
+  local.add(remote.file)
+
+4.4 user fork
+user.fork(otherUser.remote)
+new Repository <- otherUser.remote.file
+website.store(new Repository)
+
+5. Design a soft-drink/snacks vending machine.
+5.1 customer order
+5.2 customer pay
+5.3 machine give soft-drink/snacks
+5.4 machine change
+
+User
+Data: cash, creditcard
+Behavior: order, pay
+
+Machine
+Data: soft-drink/snacks
+Behavior: give, change
+
+Item
+Data: name, price, amount
+
+CreditCard
+  Data： pin, expirationDate, ID, organization, balance
+
+Sequence of Flow - Invoke Objects with Behaviors
+
+User Alex
+Machine boom
+Item cola
+CreditCard visa
+
+5.1 customer order
+Alex.order(cola)
+if cola.amount > 0:
+  order success
+else:
+  cola sold out!
+  Alex choose other soft-drink/snacks
+
+5.2 customer pay
+if Alex.pay(creditcard):
+  if visa.balance > cola.price:
+    Alex pay success
+  else:
+    pay fail!
+    Alex.pay(cash)
+
+if Alex.pay(cash)
+  if Alex.cash > cola.price:
+    Alex pay success
+  else:
+    pay fail!
+    Alex.pay(visa)
+
+5.3 machine give soft-drink/snacks
+machine.give(cola)
+
+5.4 machine change
+machine.change
