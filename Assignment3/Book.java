@@ -37,6 +37,4 @@ public setName(String name) {
     book.setName("java");
     System.out.println(book.name);
   }
-
-
 }
