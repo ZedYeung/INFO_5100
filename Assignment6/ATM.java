@@ -1,10 +1,10 @@
 import java.io.*;
 import java.util.*;
 
-public class ATM<T> {
+public class ATM {
 double availableAmountInMachine;
 double transactionFee;
-HashMap<String, ArrayList<T>> userData;
+HashMap<String, UserData> userData;
 Scanner scanner = new Scanner(System.in);
 
 private int count = 10000000;
@@ -12,7 +12,7 @@ private int count = 10000000;
 public ATM() {
 		  this.availableAmountInMachine = 0;
 		  this.transactionFee = 0;
-		  this.userData = new HashMap<String, ArrayList<T>>();
+		  this.userData = new HashMap<String, UserData>();
 }
 
 public void createNewAccount() {
@@ -20,12 +20,8 @@ public void createNewAccount() {
 			this.count += 1;
 			System.out.printf("Your bank accouont number is %s\n", bankAccoutNumber);
 
-			ArrayList<T> user = new ArrayList<T>(4);
 			System.out.println("Please input your new password");
 			String newPassword = this.scanner.next();
-			changePassword(user, newPassword);
-			user.set(2, 0);
-			user.set(3, new LinkedList<String>());
 
 			System.out.println("Please input your full name:");
 			String name = this.scanner.next();
@@ -39,122 +35,148 @@ public void createNewAccount() {
 			System.out.println("Please input your phoneNumber:");
 			String phoneNumber = this.scanner.next();
 
-			User userInfo = new User(name, age, address, phoneNumber, bankAccoutNumber);
+			User user = new User(name, age, address, phoneNumber, bankAccoutNumber);
 
-			user.set(1, userInfo);
+			UserData userData = new UserData(newPassword, user);
 
-			System.out.println("Please loginr:");
-			main();
+			this.userData.put(bankAccoutNumber, userData);
+
+			System.out.println("Input 1 to go back login interface");
+			String enter = this.scanner.next();
+			main(null);
 }
 
-public double availableBalance(ArrayList user) {
-		  return user.get(2);
+public void availableBalance(UserData userData) {
+		  System.out.printf("Your available balance is %s\n", Double.toString(userData.availableBalance));
 }
 
-public void deposit(ArrayList user, double amount) {
-		  user.set(2, user.get(2) + amount);
+public UserData deposit(UserData userData, double amount) {
+		  userData.availableBalance += amount;
 			this.availableAmountInMachine += amount;
-			user.get(3).add(String.format("deposit - %s", amount));
+			userData.hisrotyTransactions.add(String.format("deposit - %s", amount));
+			return userData;
 }
 
-public void withdraw(ArrayList user, double amount) {
+public UserData withdraw(UserData userData, double amount) {
 		  if(amount > this.availableAmountInMachine) {
-						Systme.out.printf("Sorry, the ATM only have: %s\n", this.availableAmountInMachine);
+						System.out.printf("Sorry, the ATM only have: %s\n", this.availableAmountInMachine);
 
-		  } else if (amount > user.get(2)){
-					 System.out.println("Your account only have: %s\n", user.get(2));
+		  } else if (amount > userData.availableBalance){
+					 System.out.printf("Your account only have: %s\n", Double.toString(userData.availableBalance));
 		  } else {
-				   user.set(2, user.get(2) - amount);
+					 userData.availableBalance -= amount;
 					 this.availableAmountInMachine -= amount;
-					 user.get(3).add(String.format("withDrawal - %s", amount));
+					 userData.hisrotyTransactions.add(String.format("withDrawal - %s", amount));
 			}
+			return userData;
 }
 
-public String recentTransactions(ArrayList user) {
-	LinkedList<String> transactions = user.get(3);
-	List<String> recentTransactions = transactions.subList(0, 10);
+public void recentTransactions(UserData userData) {
+	LinkedList<String> hisrotyTransactions = userData.hisrotyTransactions;
+	List<String> recentTransactions = new LinkedList<String>();
+	if (hisrotyTransactions.size() > 10) {
+		recentTransactions = hisrotyTransactions.subList(0, 10);
+	} else {
+		recentTransactions = hisrotyTransactions;
+	}
 	for (String s: recentTransactions) {
 		System.out.println(s);
 	}
 }
 
-public void changePassword(ArrayList user, String password) {
-	user.set(1, password);
+public UserData changePassword(UserData userData) {
+	System.out.println("Please input your new password");
+	String newPassword = this.scanner.next();
+	userData.password = newPassword;
+	return userData;
 }
 
-public static void main(String[] args) {
+public void main(String[] args) {
+	System.out.print("\033[H\033[2J");
+  System.out.flush();
+
 	System.out.println("Are you a new user?");
 	System.out.println("1. yes, I am a new user");
 	System.out.println("2. no, I am a current user");
 
-	int choice1 = this.scanner.next();
+	boolean passwordNotTrue = true;
+	int choice1 = this.scanner.nextInt();
 
 	if (choice1 == 1) {
 			  createNewAccount();
 	} else if (choice1 == 2) {
 			  System.out.println("Please input your bank account nubmer:");
-			  String bankAccoutNumber = this.scanner.nextline();
+			  String bankAccoutNumber = this.scanner.next();
 			  if (this.userData.get(bankAccoutNumber) != null) {
-						 User user = this.userData.get(bankAccoutNumber);
+						 UserData userData = this.userData.get(bankAccoutNumber);
 						 while (passwordNotTrue) {
 									System.out.println("Please input your bank account password:");
-									String password = this.scanner.nextLine();
-									if (password.equals(user.get(0))) {
-												boolean exit = False;
+									String password = this.scanner.next();
+									if (password.equals(userData.password)) {
+												System.out.println("Login successfully");
+												boolean exit = false;
 												while (!exit) {
-													System.out.println("Login successfully");
 												  System.out.println("1.availableBalance");
 												  System.out.println("2.withDrawal");
 												  System.out.println("3.deposit");
 												  System.out.println("4.recentTransactions");
 												  System.out.println("5.changePassword");
 												  System.out.println("6.exit");
-												  int choice2 = this.scanner.next();
+												  int choice2 = this.scanner.nextInt();
 												  switch(choice2) {
 												  case 1:
-															 availableBalance(user, amount);
+															 availableBalance(userData);
 															 break;
 												  case 2:
-															 withDrawal(user, amount);
+															 System.out.println("WithDrawal amount:");
+															 double withdrawAmount = this.scanner.nextDouble();
+															 userData = withdraw(userData, withdrawAmount);
 															 break;
 												  case 3:
-															 deposit(user, amount);
+															 System.out.println("Deposit amount:");
+															 double depositAmount = this.scanner.nextDouble();
+															 userData = deposit(userData, depositAmount);
 															 break;
 												  case 4:
-															 recentTransactions(user);
+															 recentTransactions(userData);
 															 break;
 												  case 5:
-															 changePassword(user);
+															 userData = changePassword(userData);
 															 break;
 												  case 6:
 															 System.exit(0);
 												  }
-													this.userData.put(bankAccoutNumber, user);
+													this.userData.put(bankAccoutNumber, userData);
 												}
 									} else {
 											  System.out.println("wrong password");
 											  System.out.println("1. input password again");
 											  System.out.println("2. forget password");
-											  int choice3 = this.scanner.next();
+											  int choice3 = this.scanner.nextInt();
 											  if (choice3 == 2) {
-													User userInfo = user.get(1);
+													User user = userData.user;
+
 													System.out.println("Please input your name:");
 												 	String name = this.scanner.next();
+
 													System.out.println("Please input your age:");
-													int age = this.scanner.next();
+													int age = this.scanner.nextInt();
+
 													System.out.println("Please input your phoneNumber");
 													String phoneNumber = this.scanner.next();
-													if (name == userInfo.name && age == userInfo.age && phoneNumber == userInfo.phoneNumber) {
-														System.out.println("Please input your new password");
-														String newPassword = this.scanner.next();
-														changePassword(user, newPassword);
+
+													if (name == user.name && age == user.age && phoneNumber == user.phoneNumber) {
+														userData = changePassword(userData);
+														this.userData.put(bankAccoutNumber, userData);
 													} else {
 														System.exit(0);
 													}
 											  }
 									}
 						 }
-			  }
+			  } else {
+					System.out.println("Account number not exist!");
+				}
 	}
 }
 
