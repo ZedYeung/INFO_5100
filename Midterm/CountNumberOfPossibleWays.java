@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class CountNumberOfPossibleWays {
+public class CountNumberOfPossibleWays { // score 10
   public static int countNumberOfPossibleWays(int m, int n, int x) {
     int max = n * m;
     int result;
