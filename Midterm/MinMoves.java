@@ -1,7 +1,7 @@
 import java.util.*;
 
 class MinMoves {
-    public static int minMoves(int[] nums){
+    public static int minMoves(int[] nums){ // score 7
       	int min = nums[0];
       	int sum = 0;
       	int result = 0;
