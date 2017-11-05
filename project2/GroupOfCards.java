@@ -26,6 +26,8 @@ public class GroupOfCards {
   }
 
   public void display() {
-
+    for (Card card: this.cards) {
+      card.display();
+    }
   }
 }

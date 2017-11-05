@@ -3,6 +3,11 @@ public class Deck extends GroupOfCards {
 
   public Deck() {
     super(TOTAL_CARDS);
+    for (int i=0; i<=3; i++) {
+      for (int j=0; j<=14; j++) {
+        this.cards.addCard(new Card(i, j));
+      }
+    }
   }
 
   public void suffle() {
@@ -14,6 +19,6 @@ public class Deck extends GroupOfCards {
   }
 
   public Card dealCard() {
-    return this.cards.remove(0);
+    return this.cards.removeCard(0);
   }
 }

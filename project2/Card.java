@@ -16,27 +16,41 @@ public class Card {
     }
 
     public void display() {
-        switch ( this.suit ) {
-           case 3:   return "Spades";
-           case 2:   return "Hearts";
-           case 1: return "Diamonds";
-           case 0:    return "Clubs";
+        String suits = '';
+        String cards = '';
+
+        switch (this.suit) {
+           case 3:
+             suits = "Spades";
+             break;
+           case 2:
+             suits = "Hearts";
+             break;
+           case 1:
+             suits = "Diamonds";
+             break;
+           case 0:
+             suits = "Clubs";
+             break;
        }
 
-        switch ( this.value ) {
-           case 2:   return "2";
-           case 3:   return "3";
-           case 4:   return "4";
-           case 5:   return "5";
-           case 6:   return "6";
-           case 7:   return "7";
-           case 8:   return "8";
-           case 9:   return "9";
-           case 10:  return "10";
-           case 11:  return "Jack";
-           case 12:  return "Queen";
-           case 13:  return "King";
-           case 14:  return "Ace";
+        switch (this.num) {
+           case 11:
+             cards =  "Jack";
+             break;
+           case 12:
+             cards =  "Queen";
+             break;
+           case 13:
+             cards =  "King";
+             break;
+           case 14:
+             cards =  "Ace";
+             break;
+           default:
+             cards = Integer.toString(this.num);
         }
+
+        System.out.println(cards + " of " + suits);
     }
 }
