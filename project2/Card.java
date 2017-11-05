@@ -1,6 +1,6 @@
 public class Card {
-    int suit;
-    int num;
+    private int suit;
+    private int num;
 
     public Card(int num, int suit) {
         this.num = num;

@@ -1,6 +1,6 @@
 public class GroupOfCards {
-  Card[] cards;
-  int currentSize=0;
+  private Card[] cards;
+  private int currentSize=0;
 
   public GroupOfCards(int number) {
     this.cards = new Card[number];

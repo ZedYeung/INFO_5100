@@ -99,6 +99,8 @@ public class Game {
     for (int i=0; i<this.PLAYERS; i++) {
       System.out.println("players " + i + "  score = " + computePoints(i));
     }
+
+    System.out.println("Play another game (y/n)?");
   }
 
   public void updateHeartsAndQueen(Card card) {
