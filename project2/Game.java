@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Game {
   final int PLAYERS;
   private Deck deck;
@@ -29,22 +31,22 @@ public class Game {
   }
 
   public void playAGame() {
-    deck = new Deck();
-    int cardsLeft = 52 % this.PLAYERS;
-    int playerNum;
-    Card[] cardsLeft = new Card[];
+    this.deck = new Deck();
+    int cardLeft = 52 % this.PLAYERS;
+    int playerNum = 0;
+    ArrayList<Card> cardsLeftList = new ArrayList();
 
     if (cardLeft > 0) {
       for (int i=0; i<cardLeft; i++) {
-        cardsLeft.add(deck.removeCard(0));
+        cardsLeftList.add(this.deck.removeCard(0));
       }
     }
 
-    deck.shuffle();
+    this.deck.shuffle();
 
     for (int i=0; i<this.tricks.length; i++) {
       for (int j=0; j<this.PLAYERS; j++) {
-        this.players[j].addCard(deck.dealCard());
+        this.players[j].addCard(this.deck.dealCard());
       }
     }
 
@@ -55,8 +57,10 @@ public class Game {
       System.out.println("player " + i + " shortest = " + this.players[i].getShortest());
       this.players[i].display();
 
-      if (this.players[i].find(2, 0) > 0) {
-        playerNum = i;
+      for (int j=0; j<this.players[i].getCurrentSize(); j++) {
+        if (this.players[i].getCard(j).getSuit()==0 && this.players[i].getCard(j).getNum()==2) {
+          playerNum = i;
+        }
       }
     }
 
@@ -78,7 +82,7 @@ public class Game {
 
       for (int j=1; j < this.PLAYERS; j++) {
 				playerNum = (playerNum + 1) % this.PLAYERS;
-				card = this.players[playerNum].palyACard(this, this.tricks[i]);
+				card = this.players[playerNum].playACard(this, this.tricks[i]);
 				System.out.print("player " + playerNum + "      ");
 				card.display();
 			}
@@ -86,11 +90,11 @@ public class Game {
 			playerNum = this.tricks[i].getWinner();
 
 			if (i == 0) {
-        for (Card card: cardsLeft) {
+        for (Card c: cardsLeftList) {
           System.out.print("undelt card     ");
-          card.display();
+          c.display();
 
-          updateHeartsAndQueen(card);
+          updateHeartsAndQueen(c);
         }
 			}
 			System.out.println();
@@ -106,7 +110,7 @@ public class Game {
   public void updateHeartsAndQueen(Card card) {
     if (card.getSuit()==2 && this.hearts==false) {
       System.out.println("Hearts is now broken");
-      this.hearts = ture;
+      this.hearts = true;
     }
     if (card.getSuit()==3 && card.getNum()==12) {
       this.queenOfSpades = true;
@@ -118,7 +122,7 @@ public class Game {
 
     for (int i=0; i<tricks.length; i++) {
       for (int j=0; j<tricks[i].getCurrentSize(); j++) {
-        if (this.players[playerNum].Num==tricks[i].getWinner()) {
+        if (this.players[playerNum].NUM==tricks[i].getWinner()) {
           if (tricks[i].getCard(j).getSuit()==2) {
             sum += 1;
           } else if (tricks[i].getCard(j).getSuit()==3 && tricks[i].getCard(j).getNum()==12) {
@@ -127,6 +131,8 @@ public class Game {
         }
       }
     }
+
+    return sum;
   }
 
 }

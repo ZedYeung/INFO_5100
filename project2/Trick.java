@@ -1,6 +1,6 @@
 public class Trick extends GroupOfCards {
   private int winner;
-  private Card winningCard;
+  private Card winningCard = null;
   private boolean hearts = false;
   private boolean queen = false;
 
@@ -25,27 +25,26 @@ public class Trick extends GroupOfCards {
   }
 
   public void update(int playerNum, Card card) {
-    if (isWinner(card)) {
+    if (isWinner(card) == true) {
       this.winner = playerNum;
       this.winningCard = card;
-    }
 
-    if (card.getSuit() == 2) {
-      this.hearts = true;
-    }
+      if (card.getSuit() == 2) {
+        this.hearts = true;
+      }
 
-    if (card.getSuit() == 3 && card.getNum() == 12) {
-      this.queen = true;
+      if (card.getSuit() == 3 && card.getNum() == 12) {
+        this.queen = true;
+      }
     }
   }
 
   private boolean isWinner(Card card) {
-    if (this.winningCard != null && card.getSuit() != this.winningCard.getSuit()) {
-      return false;
-    } else if (card.getNum() < this.winningCard.getNum()) {
-      return false;
-    } else {
-      return true;
+    if (this.winningCard != null) {
+      if (card.getSuit() != this.winningCard.getSuit() || card.getNum() < this.winningCard.getNum()) {
+        return false;
+      }
     }
+    return true;
   }
 }

@@ -2,23 +2,23 @@ public class Deck extends GroupOfCards {
   int TOTAL_CARDS = 52;
 
   public Deck() {
-    super(TOTAL_CARDS);
+    super(52);
     for (int i=0; i<=3; i++) {
-      for (int j=0; j<=14; j++) {
-        this.cards.addCard(new Card(i, j));
+      for (int j=2; j<=14; j++) {
+        this.addCard(new Card(j, i));
       }
     }
   }
 
-  public void suffle() {
-    for (int unshuffled = this.cards.getCurrentSize(); i>1; i--) {
+  public void shuffle() {
+    for (int unshuffled = this.getCurrentSize() - 1; unshuffled>1; unshuffled--) {
       int index = (int)(Math.random() * unshuffled);
-      Card card = this.cards.removeCard(index);
-      this.cards.addCard(card);      
+      Card card = this.removeCard(index);
+      this.addCard(card);
     }
   }
 
   public Card dealCard() {
-    return this.cards.removeCard(0);
+    return this.removeCard(0);
   }
 }

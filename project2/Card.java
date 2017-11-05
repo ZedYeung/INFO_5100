@@ -16,8 +16,8 @@ public class Card {
     }
 
     public void display() {
-        String suits = '';
-        String cards = '';
+        String suits = new String();
+        String cards = new String();
 
         switch (this.suit) {
            case 3:
