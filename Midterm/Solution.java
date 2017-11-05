@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Solution {
-public static ArrayList<Cell> findPath(int[][] maze){
+public static ArrayList<Cell> findPath(int[][] maze){ // extra credit 10
         int m = maze.length;
         int n = maze[0].length;
         ArrayList<Cell> path = new ArrayList();

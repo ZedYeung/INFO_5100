@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class ReverseEvenIndices {
+public class ReverseEvenIndices { // score 6
     public static int[] reverseEvenIndices(int[] nums) {
       int length = nums.length;
       int r = length % 2;
