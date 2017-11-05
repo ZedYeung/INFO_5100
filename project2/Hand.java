@@ -10,40 +10,25 @@ public class Hand extends GroupOfCards {
   public void sort() {
     for (int unsorted=this.cards.getCurrentSize() - 1; unsorted>1; unsorted--) {
       int max_idx = unsorted;
-        for (int j=unsorted-1; j >= 0; j--)
-            if (this.cards[j].getSuit() * 13 + this.cards[j].getNum() > this.cards[max_idx].getSuit() * 13 + this.cards[max_idx].getNum())
-                max_idx = j;
+      for (int j=unsorted-1; j >= 0; j--)
+          if (this.cards[j].getSuit() * 13 + this.cards[j].getNum() > this.cards[max_idx].getSuit() * 13 + this.cards[max_idx].getNum())
+              max_idx = j;
 
-            int temp = this.cards[max_idx];
-            this.cards[max_idx] = this.cards[unsorted];
-            this.cards[unsorted] = temp;
+          int temp = this.cards[max_idx];
+          this.cards[max_idx] = this.cards[unsorted];
+          this.cards[unsorted] = temp;
     }
   }
 
   public void setShortest() {
-    int clubs_count = 0;
-    int diamonds_count =0;
-    int hearts_count = 0;
-    int spades_count = 0;
-    this.cards.sort()
-    for (int i=0; i<this.cards.length-1; i++) {
-      if (this.cards[i-1].getSuit() == 0 && this.cards[i].getSuit() == 1) {
-        clubs_count = i;
-      } else if (this.cards[i-1].getSuit() == 1 && this.cards[i].getSuit() == 2) {
-        hearts_count = i - clubs_count;
-      } else if (this.cards[i].getSuit() == 2 && && this.cards[i].getSuit() == 3) {
-        diamonds_count = i - clubs_count - hearts_count;
-        break;
+    if (findCount(1) <= findCount(0)) {
+      this.shortest = 1;
+    }
+
+    if (findCount(3) <= findCount(1) && findCount(3) <= findCount(0)) {
+      if (find(12,3)<0 && find(13,3)<0 && find(14,3)<0) {
+        this.shortest = 3;
       }
-      spades_count = this.cards.length - clubs_count - diamonds_count - hearts_count;
-    }
-
-    if (diamonds_count <=clubs_count) {
-      this.shortest = 2;
-    }
-
-    if (spades_count <= clubs_count && spades_count <= clubs_count && find(12, 3) <0 && find(14,3)<0 && find(13,3)<0) {
-      this.shortest = 3;
     }
   }
 
@@ -72,24 +57,23 @@ public class Hand extends GroupOfCards {
         index = findHighest();
       }
 
-      trick.update(game.PLAYERS, this.cards[index]);
+      trick.update(this.NUM, this.cards[index]);
       game.updateHeartsAndQueen(this.cards[index]);
 
       return this.cards.removeCard(index);
   }
 
   public int findLowest(int suit) {
-    sort(this.cards);
-    for (int i=0; i<this.cards.length-1; i++) {
-      if (this.cards[i].getSuit()==suit) {
-        return this.cards[i];
+    for (int i=0; i<this.cards.getCurrentSize(); i++) {
+      if (this.cards.getCard(i).getSuit()==suit) {
+        return this.cards.getCard(i);
       }
       return -1;
     }
   }
 
   private int findCount(int suit) {
-    count = 0;
+    int count = 0;
     for (int i=0; i<this.cards.length-1; i++) {
       if (this.cards[i].getSuit()==suit) {
         count +=1;
@@ -98,7 +82,7 @@ public class Hand extends GroupOfCards {
   }
 
   private int find(int num, int suit) {
-    for (int i=0; i<this.cards.length-1; i++) {
+    for (int i=0; i<this.cards.getCurrentSize(); i++) {
       if (this.cards[i].getSuit()==suit && this.cards[i].getNum()==num) {
         return i;
       }
@@ -106,7 +90,6 @@ public class Hand extends GroupOfCards {
   }
 
   private int findHighest(int suit) {
-    sort(this.cards);
     if (suit==3)  {
       return this.cards[this.cards.length -1];
     } else {
@@ -123,7 +106,7 @@ public class Hand extends GroupOfCards {
     if (suit==0)  {
       return this.cards[0];
     } else {
-      for (int i=0; i<this.cards.length-1; i++) {    
+      for (int i=0; i<this.cards.length-1; i++) {
         if (this.cards[i-1].getSuit()==suit-1 && this.cards[i].getSuit()==suit) {
           return this.cards[i];
         }
@@ -132,17 +115,19 @@ public class Hand extends GroupOfCards {
   }
 
   private int findLastHigh(int suit) {
-    if (find(12, 3)) >= 0 && findCount(3) >1) {
-      sort(this.cards);
-      return this.cards[this.cards.length-2];
+    if (suit != 3) {
+      return findHighest(suit);
+    } else {
+      if (find(12, 3)) >= 0 && findCount(3) >1) {
+        return this.cards[this.cards.length-2];
+      }
     }
   }
 
   private int findHighestBelow(Card winningCard) {
-    sort(this.cards);
     for (int i=0; i<this.cards.length-1; i++) {
       if (this.cards[i].getSuit()==winningCard.getSuit()) {
-        if ((this.cards[i].getNum()<=winningCard.getNum()) {
+        if (this.cards[i].getNum()<=winningCard.getNum() && this.cards[i+1].getSuit() != this.cards[i].getSuit()) {
           return i
         }
       }
@@ -158,12 +143,14 @@ public class Hand extends GroupOfCards {
               return i
             }
           }
+        }
+      } else {
+        return findHighest(suit);
       }
     }
   }
 
   private int findHighest() {
-    sort(this.cards);
     return this.cards[this.cards.length-1];
   }
 }

@@ -25,7 +25,7 @@ public class Trick extends GroupOfCards {
   }
 
   public void update(int playerNum, Card card) {
-    if (this.isWinner(card)) {
+    if (isWinner(card)) {
       this.winner = playerNum;
       this.winningCard = card;
     }
