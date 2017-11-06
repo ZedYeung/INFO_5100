@@ -65,8 +65,8 @@ public class Game {
     }
 
     for (int i=0; i<this.tricks.length; i++) {
-      tricks[i] = new Trick(this.PLAYERS);
-      this.numberOfTricks++;
+      this.tricks[i] = new Trick(this.PLAYERS);
+      this.numberOfTricks += 1;
       Card card;
 
       if (i == 0) {
@@ -120,9 +120,9 @@ public class Game {
   private int computePoints(int playerNum) {
     int sum = 0;
 
-    for (int i=0; i<tricks.length; i++) {
-      for (int j=0; j<tricks[i].getCurrentSize(); j++) {
-        if (this.players[playerNum].NUM==tricks[i].getWinner()) {
+    for (int i=0; i<this.tricks.length; i++) {
+      if (playerNum==tricks[i].getWinner()) {
+        for (int j=0; j<this.PLAYERS; j++) {
           if (tricks[i].getCard(j).getSuit()==2) {
             sum += 1;
           } else if (tricks[i].getCard(j).getSuit()==3 && tricks[i].getCard(j).getNum()==12) {
@@ -131,7 +131,6 @@ public class Game {
         }
       }
     }
-
     return sum;
   }
 

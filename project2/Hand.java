@@ -8,7 +8,7 @@ public class Hand extends GroupOfCards {
   }
 
   public void sort() {
-    for (int unsorted=this.getCurrentSize() - 1; unsorted>1; unsorted--) {
+    for (int unsorted=this.getCurrentSize() - 1; unsorted>=1; unsorted--) {
       int max_idx = unsorted;
       for (int j=unsorted-1; j >= 0; j--)
           if (this.getCard(j).getSuit() * 13 + this.getCard(j).getNum() > this.getCard(max_idx).getSuit() * 13 + this.getCard(max_idx).getNum()) {
@@ -38,27 +38,32 @@ public class Hand extends GroupOfCards {
 
   public Card playACard(Game game, Trick trick) {
     int index = 0;
-    if ((trick.getCurrentSize() == 0) && (index = findHighest(this.getShortest())) >= 0);
-    else if ((trick.getCurrentSize() == game.PLAYERS - 1) && find(12,3)<0
-    && !trick.getHearts() && (index = findHighest()) >= 0);
+    if ((trick.getCurrentSize() == 0) && (findCount(shortest) != 0)
+				&& (index = this.findHighest(shortest)) >= 0);
+    else if ((trick.getCurrentSize() == 0) && (this.findCount(shortest) == 0)
+				&& (index = this.findLowest(game)) >= 0);
+    else if ((trick.getCurrentSize() == game.PLAYERS - 1) && !trick.getQueen()
+    && !trick.getHearts() && (index = findHighest(trick.getWinningCard().getSuit())) >= 0);
     else if ((trick.getCurrentSize() == game.PLAYERS - 1)
       && !trick.getHearts() && !trick.getQueen()
       && (index = findLastHigh(trick.getWinningCard().getSuit())) >= 0);
-      else if ((index = findHighestBelow(trick.getWinningCard())) >= 0);
-      else if ((index = findMiddleHigh(game, trick.getWinningCard().getSuit())) >= 0);
-      else if ((index = find(12, 3)) >= 0); // queen of Spades
-      else if ((index = find(14, 3)) >= 0); // Ace of Spades
-      else if ((index = find(13, 3)) >= 0); // King of Spades
-      else if ((index = findHighest(2)) >= 0); // heart
-      else
-      {
-        index = findHighest();
-      }
+    else if ((index = findHighestBelow(trick.getWinningCard())) >= 0);
+    else if ((index = findMiddleHigh(game, trick.getWinningCard().getSuit())) >= 0);
+    else if ((index = find(12, 3)) >= 0); // queen of Spades
+    else if ((index = find(14, 3)) >= 0); // Ace of Spades
+    else if ((index = find(13, 3)) >= 0); // King of Spades
+    else if ((index = findHighest(2)) >= 0); // heart
+    else
+    {
+      index = findHighest();
+    }
 
-      trick.update(this.NUM, this.getCard(index));
-      game.updateHeartsAndQueen(this.getCard(index));
+    Card card = this.removeCard(index);
 
-      return this.removeCard(index);
+    trick.update(this.NUM, card);
+    game.updateHeartsAndQueen(card);
+
+    return card;
   }
 
   public int findLowest(int suit) {
@@ -139,10 +144,10 @@ public class Hand extends GroupOfCards {
         if (this.getCard(i).getNum()<=winningCard.getNum()) {
           if (i != this.getCurrentSize()-1) {
             if (this.getCard(i+1).getSuit() != this.getCard(i).getSuit()) {
-              break;
+              return -1;
             }
-            return i;
           }
+          return i;
         }
       }
     }
