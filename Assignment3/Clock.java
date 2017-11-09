@@ -1,4 +1,4 @@
-class Clock {
+class Clock { //score 1
   String time;
 
 /* this time cannot be return. It should use this.time.
