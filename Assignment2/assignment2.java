@@ -1,3 +1,6 @@
+/* Good Work
+ * Score 8.5 + extra credit 2.5; Total Score 10
+ */
 /**
  * Each Question carries 2 points.
  * Deadline 22 sept, Friday, 11:59PM.
@@ -26,7 +29,7 @@ class Assignment2 {
         }
 
 
-        public static double employeeSalary( double hours){
+        public static double employeeSalary( double hours){ // for hours more than 48. you have to pay for hours 48. score 1.5
                 double salary = 0;
                 if (hours <= 48 && hours > 41 ) {
                         salary = (hours - 41) * 30 + 5 * 22.5 + 36 * 15;
@@ -51,7 +54,7 @@ class Assignment2 {
 
    Here is the prototype you can work with
  */
-        public static int addDigits( int input){
+        public static int addDigits( int input){ // for input 37 expected output is 1; your output 10; score 1
                 int i = 0;
                 while (input > 0) {
                         i += (input % 10);
@@ -68,7 +71,7 @@ class Assignment2 {
 
    Here is the prototype you can work with
  */
-        public static void printPerfectNumbers( int n){
+        public static void printPerfectNumbers( int n){ // score 2
                 for (int j =1; j < n; j++) {
                         int perfectNumber = 0;
                         for (int i =1; i < j; i++) {
@@ -87,7 +90,7 @@ class Assignment2 {
    i. Create atleast 3 attributes :pizza type , unit price and loyalty points. More attributes are welcome to have.
    ii. Create constructors . Extra-credit of 0.5 point if you write more than 1 right constructor to this class
  */
- public class Pizza {
+ public class Pizza { // score 2 + extra credit 0.5
         String type;
         double unitPrice;
         double loyaltyPoints;
@@ -124,7 +127,7 @@ class Assignment2 {
    ii. Think about what kind of data structure can be used to record the pizza name and number of each kind of pizza.( Give me your thought, Extra credit of 1 point)
    iii. In main method , sum up how much money the customer spent.
  */
- public class Customer {
+ public class Customer { // score 2
          String name;
          Map<Pizza, Integer> pizzas;
 
@@ -182,7 +185,7 @@ class Assignment2 {
    Here is the prototype you can work with
  */
 
-        public static void printIsoscelesTriangle( int n){
+        public static void printIsoscelesTriangle( int n){ // extra credit 2
                 for (int i=1; i<=n; i++) {
                         if (i > 1) {
                                 System.out.print('*');
