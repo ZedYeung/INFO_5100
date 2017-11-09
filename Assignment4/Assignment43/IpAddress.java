@@ -1,4 +1,4 @@
-class IpAddress {
+class IpAddress { // score 2
   String dottedDecimal;
   int firstOctet;
   int secondOctet;
