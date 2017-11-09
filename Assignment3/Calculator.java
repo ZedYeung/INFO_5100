@@ -1,7 +1,7 @@
 import java.lang.*;
 import java.util.*;
 
-public class Calculator {
+public class Calculator { // score 4 + extra credit 2
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean keep = true;
