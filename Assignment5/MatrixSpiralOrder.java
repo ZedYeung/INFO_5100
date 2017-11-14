@@ -1,7 +1,15 @@
 import java.util.*;
 
 public class MatrixSpiralOrder {
-  public static List<Integer> spiralOrder(int[][] matrix) {
+  public static List<Integer> spiralOrder(int[][] matrix) { // extra credit 1
+    
+    /* for input = {{1,2,3},
+                    {5,6,7},
+                    {9,10,11},
+                    {13,14,15}};
+           expected output = 1, 2, 3, 7, 11, 15, 14, 13, 9, 5, 6, 10
+           your output = 1, 2, 3, 7, 11, 15, 14, 13, 9, 5, 6, 10, 9
+     */
       List<Integer> matrixSpiralOrder = new ArrayList<Integer>();
       int m = matrix.length;
       int n = matrix[0].length;
