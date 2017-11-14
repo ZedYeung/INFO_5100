@@ -2,7 +2,7 @@ import java.lang.*;
 import java.math.BigDecimal;
 
 public class DessertShoppe {
-  String name;
+  String name; // these variable should be static and final as we don't want to update it and the create new instances
   double taxRate;
   int nameMaxSize;
   int receiptWidth;

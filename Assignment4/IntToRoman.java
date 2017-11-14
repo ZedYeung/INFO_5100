@@ -1,4 +1,4 @@
-class IntToRoman {
+class IntToRoman { // score 2
   public static String intToRoman(int num) {
       if (num < 1 || num > 3999) {
         System.out.println("Only number between 1 and 3999!");

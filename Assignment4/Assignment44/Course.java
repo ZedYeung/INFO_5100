@@ -1,4 +1,4 @@
-class Course {
+class Course { // score 2
   String name;
   int numberOfStudent;
   Student [] students;
@@ -25,7 +25,7 @@ class Course {
     return this.name;
   }
 
-  public void registerStudent(Student student){
+  public void registerStudent(Student student){ // you have to check if the same student is registering multiple types
     if (this.numberOfStudent < 9) {
       this.students[numberOfStudent] = student;
       this.numberOfStudent ++;

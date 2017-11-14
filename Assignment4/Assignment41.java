@@ -3,7 +3,7 @@ import java.lang.*;
 import java.util.*;
 
 public class Assignment41 {
-    public static String formattedLicense(String str, int k) {
+    public static String formattedLicense(String str, int k) { // score 2
         Pattern p = Pattern.compile("[^a-zA-Z0-9-]");
         if ( str.length() > 12000 || str.length() <= 0) {
             System.out.println("String length must more than 0 and less than 12000.");
