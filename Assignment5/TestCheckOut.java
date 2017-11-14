@@ -1,3 +1,6 @@
+/* Good Work
+ * Score 8 + extra credit 1; Total score 10
+ */
 public class TestCheckOut {
 
     public static void main(String[] args) {
