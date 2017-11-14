@@ -1,5 +1,5 @@
 class Sundae extends IceCream {
-  int toppingCost;
+  int toppingCost; // access should be private
   String iceCream;
 
   public Sundae(String iceCream, int cost, String sundae, int toppingCost) {
