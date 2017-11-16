@@ -1,3 +1,6 @@
+/* Good Work
+ * Score 20
+ */
 import java.util.*;
 
 public class Hangman {
