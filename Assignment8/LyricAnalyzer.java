@@ -12,7 +12,6 @@ public class LyricAnalyzer {
    public void read(File file) throws IOException {
      FileReader reader = new FileReader(file);
      BufferedReader br = new BufferedReader(reader);
-     StringBuilder sb = new StringBuilder();
 
      String line;
 
@@ -21,6 +20,7 @@ public class LyricAnalyzer {
        if (line == null) {
          break;
        }
+
        String[] lyrics = line.toUpperCase().split(" ");
        for (int i=0; i < lyrics.length; i++) {
          if (i == lyrics.length - 1) {
