@@ -11,7 +11,7 @@ public class LyricAnalyzer {
 
    public void read(File file) throws IOException {
      FileReader reader = new FileReader(file);
-     BufferReader br = new BufferReader(reader);
+     BufferedReader br = new BufferedReader(reader);
      StringBuilder sb = new StringBuilder();
 
      String line;
@@ -21,9 +21,9 @@ public class LyricAnalyzer {
        if (line == null) {
          break;
        }
-       String[] lyrics = line.toLowerCase().split(" ");
-       for (int i=0; i < lyrics.length(); i++) {
-         if (i == lyrics.length() - 1) {
+       String[] lyrics = line.toUpperCase().split(" ");
+       for (int i=0; i < lyrics.length; i++) {
+         if (i == lyrics.length - 1) {
            add(lyrics[i], -(i+1));
          } else {
            add(lyrics[i], (i+1));
@@ -35,10 +35,10 @@ public class LyricAnalyzer {
    }
 
    private void add(String lyricWord, int wordPosition) {
-     if (!map.containKey(lyricWord)) {
+     if (!map.containsKey(lyricWord)) {
        ArrayList<Integer> wordPos = new ArrayList();
        wordPos.add(wordPosition);
-       map.put(lyricWord, wordPosition);
+       map.put(lyricWord, wordPos);
      } else {
        map.get(lyricWord).add(wordPosition);
      }
@@ -54,7 +54,7 @@ public class LyricAnalyzer {
 
      for (String w: words) {
  			System.out.print(w);
- 			int spaceLength = 14 - word.length();
+ 			int spaceLength = 14 - w.length();
  			for (int i = 0; i < spaceLength; i++)
  				System.out.print(" ");
  			System.out.println(map.get(w).toString());
@@ -63,15 +63,30 @@ public class LyricAnalyzer {
 
    public void writeLyrics(File file) throws IOException {
      FileWriter writer = new FileWriter(file);
-     String[] words = new Sting[map.size()];k
+
+     int n = 0;
+     for (ArrayList<Integer> a: map.values()) {
+        n += a.size();
+     }
+
+     String[] words = new String[n+1];
+     Arrays.fill(words, "");
+
      for (String s: map.keySet()) {
        for (Integer i: map.get(s)) {
          if (i > 0) {
-
+            words[i] = s.toUpperCase() + " ";
+         } else {
+            words[-i] = s.toUpperCase() + " \n";
          }
        }
      }
 
+     for (int j = 0; j < words.length; j++) {
+        writer.write(words[j]);
+     }
+
+     writer.close();
    }
 
    public int count() {
