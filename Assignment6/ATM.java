@@ -1,8 +1,12 @@
+/* Good work
+ * Score 9 + extra credit 0; Total score 9;
+ * unit tests for ATM class are missing
+ */
 import java.io.*;
 import java.util.*;
 
 public class ATM {
-double availableAmountInMachine;
+double availableAmountInMachine; // should be private
 double transactionFee;
 HashMap<String, UserData> userData;
 Scanner scanner = new Scanner(System.in);
