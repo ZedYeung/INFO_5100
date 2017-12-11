@@ -1,4 +1,4 @@
-public static void parse(File file) {
+public static void parse(File file) { // score 1
   RandomAccessFile input = null;
   String line = null;
 
