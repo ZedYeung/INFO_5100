@@ -1,4 +1,4 @@
-class MyIndexOutOfBoundException extends Exception {
+class MyIndexOutOfBoundException extends Exception { // score 2
   int lowerBound;
   int upperBound;
   int index;
