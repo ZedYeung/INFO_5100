@@ -1,4 +1,4 @@
-public class ReverseHello extends Thread{
+public class ReverseHello extends Thread{ // score 2
   private int n;
 
   public ReverseHello(int n) {
