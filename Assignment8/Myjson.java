@@ -1,3 +1,6 @@
+/* Good Work
+ * Total score 10
+ */
 import java.util.*;
 import java.io.*;
 
