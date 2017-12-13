@@ -1,3 +1,6 @@
+/* GOod Work
+ * SCore 9.5 + extra credit 0; Total score 9.5
+ */
 public class PascalTriangle {
   public static void printPascalTriangle(int n){// use long, for input 100, int over flows; score 1.5
     int[] pre = new int[1];
