@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class MaxValue extends Thread {
+public class MaxValue extends Thread { // score 2
   private int lo, hi;
   private int[] arr;
   private int maxValue = Integer.MIN_VALUE;
