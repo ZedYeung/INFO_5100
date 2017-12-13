@@ -1,5 +1,5 @@
 public class PascalTriangle {
-  public static void printPascalTriangle(int n){
+  public static void printPascalTriangle(int n){// use long, for input 100, int over flows; score 1.5
     int[] pre = new int[1];
 
     for (int i=0; i<n; i++) {
